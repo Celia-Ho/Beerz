@@ -1,5 +1,8 @@
-// This is our API key
+// This is our API key for Beer Mapping API
 var APIKey = "afdeac53a3e38ffb25babbaa862d1de7";
+// This is our API key for Google Places API
+var GP_APIKey = "AIzaSyB0ePYPVkFl-ctOfTgJSJHbi7dLFCUBuAw";
+
 
 
 // Geolocation
@@ -10,8 +13,11 @@ navigator.geolocation.getCurrentPosition(function (position) {
 function searchBeerInTown(location) {
 
     // Here we are building the URL we need to query the database
-    // Querying the beer mapping api for the selected location
+    // Querying the beer mapping API for the selected location
     var queryURL = `http://beermapping.com/webservice/loccity/${APIKey}/${location}&s=json`;
+    
+    // Querying the Google Places API with Nearby Search Request based on Geolocation coordinates obtained
+    var queryURL2 = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=position.coords.latitude,position.coords.longitude&radius=50000&keyword=brewery&key=GP_APIKey';
 
     $.ajax({
         url: queryURL,
