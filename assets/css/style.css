@@ -1,0 +1,36 @@
+body {
+background-image: url(../images/background.jpg);
+background-size: cover;
+/* background-position: center; */
+/* color: black; */
+/* background-color: black; */
+padding: 0px;
+height: 100vh; 
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+/* overflow: auto; */
+}
+
+#location-form {
+    position:fixed;
+   top:50%;
+   left:50%;
+   width:250px;
+} */
+
+#toprow {
+    height: 10em;
+}
+
+.jumbotron {
+    text-align: center;
+    font-family: 'Lobster', cursive;
+    background: none;
+}
+
+.display-1{
+    transform: rotate(-18deg);
+    font-size: 10em;
+}

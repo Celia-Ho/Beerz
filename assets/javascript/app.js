@@ -1,11 +1,12 @@
+
 // This is our API key
 var APIKey = "afdeac53a3e38ffb25babbaa862d1de7";
 
 
 // Geolocation
-navigator.geolocation.getCurrentPosition(function (position) {
-    console.log(position.coords.latitude, position.coords.longitude);
-});
+//navigator.geolocation.getCurrentPosition(function (position) {
+    //console.log(position.coords.latitude, position.coords.longitude);
+//});
 
 function searchBeerInTown(location) {
 

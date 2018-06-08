@@ -7,27 +7,44 @@
   <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 </head>
 
 <body>
+  <div class="container">
+      <div class="row">
+          <div class="col-md-12" id="toprow">
+      
+        
+        </div>
+       </div>
+      <div class="jumbotron">
+          <h1 class="display-1">Beerz</h1>
+          
+       
+          
+          <p class="">
+              <form id="location-form">
 
-  <!-- Location Select Box -->
-  <form id="location-form">
+                  <!-- Label for Text Box -->
+                  <label for="location-input">Location</label>
+              
+                  <!-- Text Input Box -->
+                  <input type="text" id="location-input">
+                  <br>
+              
+                  <!-- Submit Button -->
+                  <input id="select-location" type="submit" value="GO!">
+                </form>
+          </p>
+        </div>
 
-    <!-- Label for Text Box -->
-    <label for="location-input">Location</label>
 
-    <!-- Text Input Box -->
-    <input type="text" id="location-input">
-    <br>
-
-    <!-- Submit Button -->
-    <input id="select-location" type="submit" value="GO!">
-  </form>
 
   <!-- Brewery Information -->
   <div id="location-div"></div>
-
+  </div>
+  <!-- container -->
 </body>
 
 <!-- Link in jQuery CDN -->
