@@ -1,47 +1,109 @@
-// This is our API key for Beer Mapping API
+// // This is our API key for Beer Mapping API
 var APIKey = "afdeac53a3e38ffb25babbaa862d1de7";
-// This is our API key for Google Places API
-var GP_APIKey = "AIzaSyB0ePYPVkFl-ctOfTgJSJHbi7dLFCUBuAw";
-
-
 
 // Geolocation
 navigator.geolocation.getCurrentPosition(function (position) {
     console.log(position.coords.latitude, position.coords.longitude);
 });
 
+
+var geocoder
+var barDetails = []
+var resultsMap
+function initMap() {
+    var myLatLong = new google.maps.LatLng(43.68, -79.4);
+    resultsMap = new google.maps.Map(document.getElementById('map'), {
+        zoom: 11,
+        center: myLatLong
+    });
+    geocoder = new google.maps.Geocoder();
+}
+
+
 function searchBeerInTown(location) {
 
-    // Here we are building the URL we need to query the database
-    // Querying the beer mapping API for the selected location
+    // Here we are building the URL we need to query the database of Beer Mapping API for the selected location
     var queryURL = `http://beermapping.com/webservice/loccity/${APIKey}/${location}&s=json`;
-    
-    // Querying the Google Places API with Nearby Search Request based on Geolocation coordinates obtained
-    var queryURL2 = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=position.coords.latitude,position.coords.longitude&radius=50000&keyword=brewery&key=GP_APIKey';
 
+    // Running Beer Mapping API ajax call
     $.ajax({
         url: queryURL,
         method: "GET"
     }).then(function (response) {
 
-
         // Printing the entire object to console
         for (var i = 0; i < response.length; i++) {
+
             console.log(response[i]);
 
             // Constructing HTML containing the brewery information
-            var beerName = $("<h1>").html("Name: " + response[i].name);
+            var beerName = $("<h5>").html(response[i].name);
             var beerURL = $("<a>").attr({
                 "href": "https://" + response[i].url,
                 "target": "_blank"
             }).append(beerName);
-            var beerStreet = $("<h2>").text("Address: " + response[i].street);
-            var beerStatus = $("<h2>").text("Status: " + response[i].status);
+            var beerStreet = $("<h6>").text("Address: " + response[i].street);
+            var beerStatus = $("<h6>").text("Type: " + response[i].status);
 
             // Append the new location content
             $("#location-div").append(beerURL, beerStreet, beerStatus);
 
+            //concatenate api address deets for geocoder
+            var barName = response[i].name
+            var address = response[i].street;
+            var city = response[i].city;
+            var state = response[i].state;
+            var country = response[i].country;
+            var barUrl = response[i].url;
+
+            var contentInfo = {
+                streetAddress: address + ", " + city + ", " + state + ", " + country,
+                name: barName,
+                url: barUrl
+            }
+            barDetails.push(contentInfo);
+
         }
+
+        var handle = setInterval(function () {
+            if (barDetails.length == 1) {
+                clearInterval(handle)
+            }
+            var contentMar = barDetails.pop()
+            console.log(contentMar);
+            var streetAddresses = contentMar.streetAddress
+            console.log(streetAddresses)
+            geocoder.geocode({ 'address': streetAddresses }, function (results, status) {
+                if (status === 'OK') {
+                    var myLatLong = new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng())
+                    // console.log(myLatLong);
+                    var marker = new google.maps.Marker({
+                        map: resultsMap,
+                        position: results[0].geometry.location,
+                        title: contentMar.name,
+                        // url: '<a href = https://' + contentMar.url + ' ' + 'target = "blank">'
+                    });
+
+                    // google.maps.event.addListener(marker, 'click', function() {
+                    //     window.location.href = marker.url
+                    // });
+                    var contentString = '<a href = https://' + contentMar.url + ' ' + 'target = "blank">' + contentMar.name + '</a>';
+                    var infowindow = new google.maps.InfoWindow({
+                        content: contentString
+                    }); console.log(contentString);
+
+                    marker.addListener('click', function () {
+                        infowindow.open(map, marker);
+                    });
+
+
+                    resultsMap.panTo(myLatLong);
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                };
+            });
+        }, 700);
+
     });
 }
 
@@ -55,3 +117,4 @@ $("#select-location").on("click", function (event) {
     // Running the searchBeerInTown function (passing in the location as an argument)
     searchBeerInTown(inputLocation);
 });
+
