@@ -33,67 +33,69 @@ function searchBeerInTown(location) {
 
         // Printing the entire object to console
         for (var i = 0; i < response.length; i++) {
-            console.log(response[i]);
-            //concatenate api address deets for geocoder
 
-            for (var c = 0; c < response.length; c++) {
-                var name = response[c].name
-                var address = response[c].street;
-                var city = response[c].city;
-                var state = response[c].state;
-                var country = response[c].country;
-                var url = "https://" + response[c].url
-                var contentInfo = {
-                    streetAddress: address + ", " + city + ", " + state + ", " + country,
-                    name: name,
-                    url:url
-                }
-                barDetails.push(contentInfo)
-            }
-
-            // Constructing HTML containing the brewery information
-            var beerName = $("<h1>").html(response[i].name);
+            // Constructing HTML containing the brewery information            
+            var beerName = $("<h5>").html(response[i].name);
             var beerURL = $("<a>").attr({
                 "href": "https://" + response[i].url,
                 "target": "_blank"
             }).append(beerName);
-            var beerStreet = $("<h2>").text("Address: " + response[i].street);
-            var beerStatus = $("<h2>").text("Type: " + response[i].status);
+            var beerStreet = $("<h6>").text("Address: " + response[i].street);
+            var beerStatus = $("<h6>").text("Type: " + response[i].status);
 
             // Append the new location content
             $("#location-div").append(beerURL, beerStreet, beerStatus);
 
-        }        
-        // for (var j = 0; j < response.length; j++) {
-        //     var name = response[j].name;
-        //     var street = response[j].street;         
-        //     var url = "https://" + response[j].url
-        //     contentInfo = name + ", " + street + ", " + url;
-        // }
+            //concatenate api address deets for geocoder
+                var barName = response[i].name
+                var address = response[i].street;
+                var city = response[i].city;
+                var state = response[i].state;
+                var country = response[i].country;
+                var barUrl = response[i].url;                
+                
+                var contentInfo = {
+                    streetAddress: address + ", " + city + ", " + state + ", " + country,
+                    name: barName,
+                    url: barUrl
+                 }
+                barDetails.push(contentInfo);
 
-        // var infoWindow = new google.maps.InfoWindow({
-        //     content: contentInfo
-        // });
-
+            
+        }      
+        
         var handle = setInterval(function () {
-            if (barDetails.length == 0){
+            if (barDetails.length == 1){
                 clearInterval(handle)
             }
-            var contentInfo = barDetails.pop()
-            var streetAddress = contentInfo.streetAddress
-            geocoder.geocode({ 'address': streetAddress }, function (results, status) {
+            var contentMar = barDetails.pop()
+            console.log(contentMar);        
+            var streetAddresses = contentMar.streetAddress
+            console.log(streetAddresses)
+            geocoder.geocode({ 'address': streetAddresses }, function (results, status) {
                 if (status === 'OK') {
                     var myLatLong = new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng())
                     // console.log(myLatLong);
                     var marker = new google.maps.Marker({
                         map: resultsMap,
                         position: results[0].geometry.location,
-                        title : contentInfo.name,
-                        url: contentInfo.url                                          
+                        title : contentMar.name,
+                        // url: '<a href = https://' + contentMar.url + ' ' + 'target = "blank">'
                     }); 
-                    google.maps.event.addListener(marker, 'click', function() {
-                        window.location.href = marker.url
-                    });
+
+                    // google.maps.event.addListener(marker, 'click', function() {
+                    //     window.location.href = marker.url
+                    // });
+                    var contentString = '<a href = https://' + contentMar.url + ' ' + 'target = "blank">' + contentMar.name +  '</a>';
+                    var infowindow = new google.maps.InfoWindow({
+                        content: contentString
+                      });console.log(contentString);
+                    
+                      marker.addListener('click', function() {
+                        infowindow.open(map, marker);
+                      });
+                    
+                    
                     resultsMap.panTo(myLatLong);
                 } else {
                     alert('Geocode was not successful for the following reason: ' + status);
@@ -104,11 +106,7 @@ function searchBeerInTown(location) {
     });; 
 }
 
-// Event handler for user clicking the select-location button
-// $("#select-location").on("click", function (event) {
-// window.location.reload(true);
-// event.stopPropagation();
-// });
+
 
 $("#select-location").on("click", function (event) {
     // Preventing the button from trying to submit the form
@@ -117,10 +115,13 @@ $("#select-location").on("click", function (event) {
     // Storing the location name
     var inputLocation = $("#location-input").val().trim();
 
-    
+    //clearMarkers();
+    // markers = [];
     // Running the searchBeerInTown function (passing in the location as an argument)
     searchBeerInTown(inputLocation);
 });
+// Deletes all markers in the array by removing references to them.
+
 
 
 // })   //doc ready close
