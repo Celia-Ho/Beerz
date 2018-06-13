@@ -1,0 +1,74 @@
+/* Jackie's CSS */
+#location-container {
+
+    margin: 0px auto;
+    padding: 0px;
+    width: 420px;
+    height: 650px;
+    overflow: auto;
+    
+   
+}
+.row {
+
+    padding-top:12%;
+    float:center;      
+    padding-left: 280px;  
+}
+
+#location-div {
+    width: 400px;
+    height: 630px;
+    background-color: #FFBF00;
+    opacity: .4;
+    font: arial;
+    color: black;
+    font-weight: bold;
+}
+
+#map-container {
+    position: relative;
+    margin: 0px auto;
+    padding-left: 30px;
+    width: 700px;
+    height: 650px;
+    overflow: auto; 
+}
+
+#map {
+    width: 800px;
+    height: 680px;
+}
+
+#location-form{
+    float: right;
+    width:30%;
+    padding-top: 30px;
+    text-align: right;
+    padding-right: 15px;
+    font-family: 'Lobster', cursive;
+}
+
+
+body {
+
+    background-image: url(../images/secondback.jpg);
+    background-size: cover;
+    padding: 0px;
+    height: 100%; 
+    background-position: center;
+    background-repeat: repeat;
+   
+}
+
+.navbar {
+    font-family: 'Lobster', cursive;
+    background: transparent;
+    background-size: cover;
+
+}
+
+h2{
+    float:left;
+    position: left;
+}
