@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Beerz</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link href="assets/css/perfect-scrollbar.css" rel="stylesheet">
+
+    <style>
+        #location-container {
+            position: relative;
+            margin: 0px auto;
+            padding: 0px;
+            width: 420px;
+            height: 650px;
+            overflow: auto;
+        }
+
+        #location-div {
+            width: 400px;
+            height: 630px;
+        }
+
+        #map-container {
+            position: relative;
+            margin: 0px auto;
+            padding: 0px;
+            width: 700px;
+            height: 650px;
+            overflow: auto;
+        }
+
+        #map {
+            width: 800px;
+            height: 680px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Location Select Box -->
+    <form id="location-form">
+        <!-- Label for Text Box -->
+        <label for="location-input">Location</label>
+        <!-- Text Input Box -->
+        <input type="text" id="location-input" placeholder="e.g. Waterloo,ON">
+        <!-- Submit Button -->
+        <input id="select-location" type="submit" value="GO!">
+    </form>
+
+    <br>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <!-- Brewery Information -->
+            <div id="location-container">
+                <div id="location-div"></div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <!-- Map -->
+            <div id="map-container">
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+</body>
+
+<!-- Link in jQuery CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- <script src="http://maps.google.com/maps/api/js"></script> -->
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0ePYPVkFl-ctOfTgJSJHbi7dLFCUBuAw&libraries=places"></script> -->
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0ePYPVkFl-ctOfTgJSJHbi7dLFCUBuAw&callback=initMap"
+    type="text/javascript"></script>
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.25/gmaps.js"></script> -->
+
+<!-- Link in JavaScript -->
+<script src="assets/javascript/app.js"></script>
+
+<!-- Link in Perfect Scrollbar Javascript Libary -->
+<script src="assets/javascript/perfect-scrollbar.js"></script>
+
+
+</html>
