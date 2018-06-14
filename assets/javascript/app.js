@@ -30,6 +30,12 @@ function searchBeerInTown(location) {
         method: "GET"
     }).then(function (response) {
 
+        //clear parameter from URL (index1 input location)
+        var url = window.location.toString();
+        if (url.indexOf("?") > 0) {
+            var clear_url = url.substring(0, url.indexOf("?"));
+            window.history.replaceState({}, document.title, clear_url);
+        }
         // Form validation to check correct location entry
         if (response[0].city === null) {
             alert("Enter a valid location. \n(e.g. Waterloo OR Waterloo,ON OR Waterloo,Ontario)");
@@ -117,6 +123,7 @@ function searchBeerInTown(location) {
                     };
                 });
             }, 700);
+            // using free Geocoder - query volume per second is low, and query limit is low, hence setInterval
         }
     });
 }
@@ -127,7 +134,21 @@ $("#select-location").on("click", function (event) {
     event.preventDefault();
     // Storing the location name
     var inputLocation = $("#location-input").val().trim();
-
     // Running the searchBeerInTown function (passing in the location as an argument)
     searchBeerInTown(inputLocation);
 });
+
+// getting parameter stored onto URL from Index.html inputLocation
+var queryString = window.location.href;
+var index = queryString.indexOf("?");
+var substring = queryString.substr(index + 1).split('&');
+console.log(substring);
+var ending = "";
+for (var i = 0; i < substring.length; i++) {
+    var params = substring[i].split('=');
+    console.log(params);
+    var parameter = params[1];
+    // Running the searchBeerInTown function using parameter
+    searchBeerInTown(parameter);
+};
+console.log(parameter);
