@@ -1,0 +1,21 @@
+body {
+
+    background-image: url(../images/secondback.jpg);
+    background-size: cover;
+    padding: 0px;
+    height: 100vh; 
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.navbar {
+    font-family: 'Lobster', cursive;
+    background: transparent;
+    background-size: cover;
+
+}
+
+#location-form {
+    text-align: right;
+    float: right;
+}
