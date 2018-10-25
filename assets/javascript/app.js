@@ -39,7 +39,7 @@ function searchBeerInTown(location) {
 
         // Form validation to check correct location entry
         if (response[0].city === null) {
-            alert("Welcome to Beerz!\nPlease enter a valid location in the correct format.\n(e.g. Waterloo OR Waterloo,ON OR Waterloo,Ontario)");
+            alert("Please enter a valid location in the correct format.\n(e.g. Waterloo OR Waterloo,ON OR Waterloo,Ontario)\nDo not enter spaces.  Please try again.");
 
             // Emptying the input text box after each search
             document.querySelector('#location-input').value = '';
@@ -68,7 +68,7 @@ function searchBeerInTown(location) {
                 $("#location-div").append(beerHTML);
 
                 //concatenate api address deets for geocoder
-                var barName = response[i].name
+                var barName = response[i].name;
                 var address = response[i].street;
                 var city = response[i].city;
                 var state = response[i].state;
@@ -151,6 +151,8 @@ for (var i = 0; i < substring.length; i++) {
     console.log(params);
     var parameter = params[1];
     // Running the searchBeerInTown function using parameter
-    searchBeerInTown(parameter);
+    if (parameter) {
+        searchBeerInTown(parameter);
+    }
 };
 console.log(parameter);
