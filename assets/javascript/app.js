@@ -22,7 +22,7 @@ function initMap() {
 function searchBeerInTown(location) {
 
     // Here we are building the URL we need to query the database of Beer Mapping API for the selected location
-    var queryURL = `http://beermapping.com/webservice/loccity/${APIKey}/${location}&s=json`;
+    var queryURL = `https://beermapping.com/webservice/loccity/${APIKey}/${location}&s=json`;
 
     // Running Beer Mapping API ajax call
     $.ajax({
